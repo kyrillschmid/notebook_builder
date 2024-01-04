@@ -4,10 +4,11 @@ A python package that lets you build course material as notebooks
 
 ## Installation
 
-Create virtual env:
+Create and activate virtual env:
 
 ```shell script
 python -m venv notebookbuilder
+source notebookbuilder/bin/activate
 ```
 
 Install dependencies:
@@ -23,7 +24,7 @@ python -m build
 ```
 
 ```shell script
-pip install dist/simple_packaging-0.0.1-py3-none-any.whl
+pip install dist/notebook_builder-0.1.0-py3-none-any.whl
 ```
 
 To install the package so that it can be used for development purposes
@@ -46,7 +47,7 @@ API_KEY=...
 To create a notebook from file use:
 
 ```shell script
-python notebookbuilder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.md" --name "markov_decision_processes"
+python notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.md" --name "markov_decision_processes"
 ```
 
 Adjust the markdown template to your needs. The template should contain the following tags:

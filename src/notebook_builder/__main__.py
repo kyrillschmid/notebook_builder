@@ -43,8 +43,11 @@ def main():
     )
     args = parser.parse_args()
 
+    with open(args.template, "r") as f:
+        template = f.read()
+
     # generate .py
-    generate_py(args)
+    generate_py(args, template)
 
     # generate .ipynb
     notebook = parse_py_to_notebook(args)
