@@ -1,79 +1,96 @@
 """ Header cell """
 # j2 from 'macros.j2' import header
-# {{ header("Einführung in Markov-Entscheidungsprozesse", "Introduction to Markov Decision Processes") }}
+# {{ header("Markov-Entscheidungsprozesse", "Markov Decision Processes") }}
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
 # ## Motivation
-# - Markov Decision Processes (MDPs) are a mathematical framework for modeling decision making where outcomes are partly random and partly under the control of a decision maker.
-# - They are used in many fields such as economics, game theory, control theory, operations research, artificial intelligence and robotics.
+# - Markov decision processes (MDPs) provide a mathematical framework for modeling sequential decision-making scenarios, and are a key element in reinforcement learning.
+# - Understanding MDPs allows us to model complex environments and learning systems, and is a prerequisite for studying and applying reinforcement learning algorithms.
 
 """ Code cell """
 # %%
-# An example code is shown which initializes a simple Markov Decision Process
-states = ['s1', 's2', 's3']
-actions = ['a1', 'a2', 'a3']
-rewards = {'s1': {'a1': 5, 'a2': -1, 'a3': 0},
-           's2': {'a1': -1, 'a2': 5, 'a3': 0},
-           's3': {'a1': 0, 'a2': -1, 'a3': 5}}
+# A simple implementation of an MDP
+states = ('Rain', 'Nice')
+actions = ('Walk', 'Shop', 'Clean')
+rewards = {(('Rain', 'Walk'), ('Rain')): -1, (('Rain', 'Shop'), ('Nice')): 2, (('Nice', 'Walk'), ('Rain')): 3}
 
-""" Code cell """
-# %%
-# Another example code is shown where it determines the optimal action for a given state using a simple policy
-def get_optimal_action(state):
-    return max(rewards[state], key=rewards[state].get)
-print(get_optimal_action('s1'))
+def transition(s, a):
+    # Put your transition logic here
+    pass
+
+def reward(s, a, s_prime):
+    return rewards.get((s,a), s_prime, 0)
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
 # ## Definition
-# - A Markov Decision Process is a tuple (S, A, P, R, γ) where:
-#   - S is the state space.
-#   - A is the action space.
-#   - P is the probability transition function. P(s'|s,a) specifies the probability of arriving at state s' if action a is taken at state s.
-#   - R is the reward function. R(s,a) gives the reward received after taking action a at state s.
-#   - γ is the discount factor which determines the present value of future rewards.
+# - A Markov Decision Process (MDP) is defined by a tuple (S, A, P, R, γ), where:
+#   - S is a set of states
+#   - A is a set of actions
+#   - P is a state transition function, P(s'|s,a) is the probability of ending in state s' given the current state s and action a
+#   - R is a reward function, R(s,a,s') is the reward received after transitioning from state s to state s' due to action a
+#   - γ is the discount factor, which determines the present value of future rewards
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
-# ## Application: Game Theory
-# - In game theory, MDPs can be used to model and solve multiplayer games where each player has a strategy to maximize their score.
-# - For example, in a board game, the state could be the current position of all pieces, the action could be the player's move, and the reward could be the score change due to that move.
+# ## Application: Control of a robotic system
+# - A robotic system's behaviour can be modelled as an MDP. The states represent the positions and velocity of the robot, the actions represent the control commands, and the rewards could be set to encourage reaching a target and avoiding obstacles.
 
 """ Code cell """
 # %%
-# Here is a basic example of how one might set up an MDP for a simple game.
-states = ['start', 'player1', 'player2', 'end']
-actions = ['move1', 'move2', 'capture']
-rewards = {'start': {'move1': 0, 'move2': 0, 'capture': 0},
-           'player1': {'move1': 1, 'move2': -1, 'capture': 5},
-           'player2': {'move1': -1, 'move2': 1, 'capture': -5},
-           'end': {'move1': 0, 'move2': 0, 'capture': 0}}
+# Assume there exist functions to get current state and perform action
+# These functions are usually provided by the robot control system or simulator
+def get_current_state():
+    pass
+
+def perform_action(action):
+    pass
+
+# The MDP based control algorithm
+state = get_current_state()
+action = None  # Choose an action based on your current understanding of the environment and the MDP model
+perform_action(action)
+
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
-# ## Application: Artificial Intelligence and Robotics
-# - In artificial intelligence and robotics, MDPs can be used for planning under uncertainty.
-# - For example, in robot navigation, the state could be the robot's position, the action could be the robot's motion commands, and the reward could be related to reaching the goal or avoiding obstacles.
-
+# ## Application: Game playing strategy
+# - The process of playing a game can be modelled as an MDP. The states will represent the current board configuration, the actions are the legal moves, and the rewards can be set to encourage winning the game and penalize losing.
+ 
 """ Code cell """
 # %%
-# Here is a basic example of how one might set up an MDP for robot navigation.
-states = ['s1', 's2', 's3', 's4']
-actions = ['move_up', 'move_down', 'move_left', 'move_right']
-rewards = {'s1': {'move_right': 1, 'move_up': -1, 'move_down': -1, 'move_left': -1},
-           's2': {'move_right': -1, 'move_up': 1, 'move_down': -1, 'move_left': -1},
-           's3': {'move_right': -1, 'move_up': -1, 'move_down': 1, 'move_left': -1},
-           's4': {'move_right': -1, 'move_up': -1, 'move_down': -1, 'move_left': 1}}
+# Assume there exists functions to get current board configuration, get legal moves, make a move and get the game result
+# These functions are usually provided by the game engine or library
+
+def get_current_board():
+    pass
+
+def get_legal_moves():
+    pass
+
+def make_move(move):
+    pass
+
+def get_game_result():
+    pass
+
+# The MDP based game playing algorithm
+board = get_current_board()
+moves = get_legal_moves()
+move = None  # Choose a move based on your current understanding of the game and the MDP model
+make_move(move)
+
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
 # ## Limitations
-# - Although MDPs provide a robust framework for decision making under uncertainty, they have limitations. For instance, they assume that the decision maker has perfect knowledge of the state transition dynamics and rewards.
-# - Also, in large state-action spaces, finding an optimal policy can be computationally intensive.
+# - MDPs assume that the decision maker has full knowledge of the state transition probabilities and reward functions, which may not be the case in many real-world scenarios.
+# - Large state or action spaces can make solving MDPs computationally infeasible.
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
-# ## Hands-On Workshop
-# In this workshop, we will create a simple MDP for a hypothetical scenario and implement an algorithm to find the optimal policy under this MDP. Stay tuned!
+# ## Workshop: Practice with Markov Decision Processes
+# - Workshop attendees will be given access to a Python environment with the necessary libraries and functions to implement and solve MDPs.
+# - Hands-on tasks will include defining and solving MDP problems, and implementing reinforcement learning algorithms based on MDPs.
 

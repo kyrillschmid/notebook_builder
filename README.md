@@ -23,6 +23,8 @@ To build the project use
 python -m build
 ```
 
+Install the package with
+
 ```shell script
 pip install dist/notebook_builder-0.1.0-py3-none-any.whl
 ```
@@ -47,7 +49,7 @@ API_KEY=...
 To create a notebook from file use:
 
 ```shell script
-python notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.txt" --name "markov_decision_processes"
+notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.txt" --name "markov_decision_processes"
 ```
 
 Adjust the txt template to your needs. The template should contain the following tags:
