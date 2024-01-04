@@ -32,7 +32,7 @@ def main():
     parser.add_argument(
         "-template",
         "--template",
-        default="template_mdp.md",
+        default="template_mdp.txt",
         help="What is the name of the template?",
     )
     parser.add_argument(

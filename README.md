@@ -47,7 +47,7 @@ API_KEY=...
 To create a notebook from file use:
 
 ```shell script
-python notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.md" --name "markov_decision_processes"
+python notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.txt" --name "markov_decision_processes"
 ```
 
-Adjust the markdown template to your needs. The template should contain the following tags:
+Adjust the txt template to your needs. The template should contain the following tags:
