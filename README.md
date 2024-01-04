@@ -38,7 +38,7 @@ pip install -e .
 
 in the root directory.
 
-Create a .env file in the root directory and add the following variables:
+Create a .env file in the root directory and add the OpenAI API key:
 
 ```shell script
 API_KEY=...
