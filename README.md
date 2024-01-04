@@ -52,4 +52,6 @@ To create a notebook from file use:
 notebook-builder --general_topic "Reinforcement Learning" --topic "Markov Decision Processes" --author "Anonymous" --template "template_mdp.txt" --name "markov_decision_processes"
 ```
 
-Adjust the txt template to your needs. The template should contain the following tags:
+Adjust the txt template to your needs.
+
+Check output folder for the generated notebook.
