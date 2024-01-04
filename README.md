@@ -35,6 +35,12 @@ pip install -e .
 
 in the root directory.
 
+Create a .env file in the root directory and add the following variables:
+
+```shell script
+API_KEY=...
+```
+
 ## Usage
 
 To create a notebook from file use:
