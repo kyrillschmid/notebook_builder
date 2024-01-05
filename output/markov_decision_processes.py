@@ -1,91 +1,94 @@
 """ Header cell """
 # j2 from 'macros.j2' import header
-# {{ header("Markov-Entscheidungsprozesse", "Markov Decision Processes") }}
+# {{ header("Markov Entscheidungsprozesse", "Markov Decision Processes") }}
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
 # ## Motivation
-# - Markov Decision Processes (MDPs) form the theoretical basis for many areas of Machine Learning, particularly Reinforcement Learning.
-# - Understanding MDPs paves the way to developing adaptive, intelligent systems that learn from their interactions with the environment.
-# - With a solid understanding of MDPs, we can create algorithms that learn to perform tasks simply by trial and error, without explicit programming for each specific task.
+# - Markov Decision Processes (MDPs) serve as a mathematical framework for modeling decision making in situations where outcomes are partly random and partly under the control of a decision maker.
+# - MDPs are useful for studying optimization problems solved via dynamic programming and reinforcement learning.
 
 """ Code cell """
 # %%
-# Code example demonstrating a simple Markov chain (not a decision process yet, but build up to it) 
-import numpy as np
-
-# Transition matrix for a simple weather model
-# This is a Markov chain where the weather of each day is dependent only on the weather of the previous day
-transition_matrix = np.array([[0.7, 0.3],  # Probabilities for ('sunny', 'rainy') given that yesterday was sunny
-                              [0.3, 0.7]]) # Probabilities for ('sunny', 'rainy') given that yesterday was rainy
-currentState = 'sunny'
-markov_chain = [currentState]
-
-np.random.seed(0)
-for _ in range(10):
-    if currentState == 'sunny':
-        currentState = np.random.choice(['sunny', 'rainy'], p=transition_matrix[0])
-    else:
-        currentState = np.random.choice(['sunny', 'rainy'], p=transition_matrix[1])
-    markov_chain.append(currentState)
-
-print(f'Markov chain: {markov_chain}')
-
-""" Slide cell """
-# %% [markdown] lang="en" tags=["slide"]
-# ## Definition
-# - A Markov Decision Process (MDP) is a 4-tuple (S, A, P, R) where:
-# - S is a finite set of states.
-# - A is a finite set of actions.
-# - P is a state transition probability matrix.
-# - R is a reward function.
-
-""" Slide cell """
-# %% [markdown] lang="en" tags=["slide"]
-# ## Application: Game playing
-# - MDPs provide a strong theoretical foundation for designing artificial intelligence (AI) for games.
-# - In a game, the state space could be the positions of all the pieces, the action space could be the set of all possible moves, and the reward could be associated with winning or losing the game.
+# The transition probabilities in a MDP are the equivalent of the kernel in a Markov chain
+transition_probabilities = {
+   's0': {'a0': {'s0': 0.5, 's2': 0.5},
+          'a1': {'s2': 1}},
+   's1': {'a0': {'s0': 0.7, 's1': 0.1, 's2': 0.2},
+          'a1': {'s1': 0.95, 's2': 0.05}},
+   's2': {'a0': {'s0': 0.4, 's2': 0.6},
+          'a1': {'s0': 0.3, 's1': 0.3, 's2': 0.4}}
+}
 
 """ Code cell """
 # %%
-# Code example demonstrating a simple Markov Decision Process in the context of a simple game
-# In this game, the player starts at position 0, can either stay or move right, and gets a reward when reaching position 5
-import pandas as pd
-
-# State space
-states = [0, 1, 2, 3, 4, 5]
-
-# Action space
-actions = ['stay', 'right']
-
-# Transition probabilities and rewards
-transition_probabilities = {action: pd.DataFrame(index=states, columns=states) for action in actions}
-
-for state in states:
-    if state < 5:
-        transition_probabilities['stay'].loc[state,:] = [1 if state==s else 0 for s in states]
-        transition_probabilities['right'].loc[state,:] = [1 if state+1==s else 0 for s in states]
-    else:
-        transition_probabilities['stay'].loc[state,:] = [1 if state==s else 0 for s in states]
-        transition_probabilities['right'].loc[state,:] = [1 if state==s else 0 for s in states]
-    
-rewards = pd.Series([0, 0, 0, 0, 0, 1], index=states)
-
-print(f'Transition probabilities for "stay":\n{transition_probabilities["stay"]}\n')
-print(f'Transition probabilities for "right":\n{transition_probabilities["right"]}\n')
-print(f'Rewards:\n{rewards}\n')
+# Rewards for each state and action.
+rewards = {
+   's0': {'a0': {'s0': 0, 's2': 0},
+          'a1': {'s2': 0}},
+   's1': {'a0': {'s0': 0, 's1': -50, 's2': 40},
+          'a1': {'s1': 0, 's2': -50}},
+   's2': {'a0': {'s0': 0, 's2': 0},
+          'a1': {'s0': 20, 's1': 20, 's2': -50}}
+}
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
-# ## Limitations
-# - The Markov property assumes the future is independent of the past given the present. This might not hold in some real-world problems.
-# - Large state and action spaces can make the problem computationally intractable.
-# - Unknown transition probabilities and rewards may require learning from simulation or experience, which can be a complex problem in itself.
+# ## Formal Definition
+# - A Markov Decision Process (MDP) is a tuple (S, A, P, R, γ) where:
+#   - S is a finite set of states.
+#   - A is a finite set of actions.
+#   - P is a state transition probability matrix.
+#   - R is a reward function. 
+#   - γ is a discount factor γ ∈ [0, 1].
 
 """ Slide cell """
 # %% [markdown] lang="en" tags=["slide"]
-# ## Workshop
-# - Now that you are familiar with Markov Decision Processes (MDPs), it's time to put your knowledge into practice!
-# - Implement a MDP for a simple game and try to find an optimal policy using trial and error.
-# - Use the example provided in this guide as a starting point. Make sure to revise and adapt the transition probabilities and rewards according to your specific game.
+# ## Application: Grid World
+# - The Grid world is a popular application for MDP where an agent learns to reach the terminal from any cell on a grid.
+# - The states are each cell in the grid, and the actions possible are moving in the four directions.
+
+""" Code cell """
+# %%
+# Application example: Defining a simple grid world
+grid_world = [
+   ['#', ' ', ' ', ' ', ' ', ' ', ' ', 'T'],
+   [' ', '#', ' ', '#', ' ', ' ', '#', ' '],
+   [' ', ' ', ' ', ' ', ' ', ' ', '#', ' '],
+   ['O', ' ', '#', ' ', ' ', ' ', ' ', ' '],
+   [' ', ' ', ' ', ' ', '#', ' ', ' ', ' '],
+   [' ', '#', ' ', ' ', ' ', ' ', ' ', ' '],
+   [' ', '#', ' ', ' ', ' ', ' ', ' ', ' ']
+]
+
+""" Slide cell """
+# %% [markdown] lang="en" tags=["slide"]
+# ## Application: Robot Navigation
+# - Robots use MDP to decide on the optimal path to reach a destination while avoiding obstacles.
+# - Each state is the current location of the robot and the possible actions are the navigational directions.
+
+""" Code cell """
+# %%
+# Application example: Defining a simple robot navigation task
+robot_navigation = {
+  "location": (1,1),
+  "goal": (4,4),
+  "obstacles": [(2,2), (3,3)],
+  "actions": ["up", "down", "left", "right"]
+}
+
+""" Slide cell """
+# %% [markdown] lang="en" tags=["slide"]
+# ## Limitations 
+# - MDPs make the key assumption of Markov property, which states that the future state only depends on the current state and not the history of states.
+# - Determining the state-transition probabilities can be challenging in complex real-world scenarios.
+
+""" Slide cell """
+# %% [markdown] lang="en" tags=["slide"]
+# ## Workshop: Building an MDP
+# 1. Define the states: Identify the possible states of your system.
+# 2. Define the actions: Identify the possible actions at each state.
+# 3. Determine the state transition probabilities: Determine the chances of ending up in a next state given the current state and action.
+# 4. Set the rewards: Determine the rewards for each action at each state, leading to each possible next state.
+# 5. Select a discount factor: This determines the current value of future rewards.
 

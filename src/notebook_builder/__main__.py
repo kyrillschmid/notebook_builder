@@ -3,6 +3,7 @@ import nbformat
 
 from notebook_builder.generate import generate_py
 from notebook_builder.create_notebook import parse_py_to_notebook
+import streamlit as st
 
 
 def main():
@@ -46,13 +47,10 @@ def main():
     with open(args.template, "r") as f:
         template = f.read()
 
-    # generate .py
     generate_py(args, template)
 
-    # generate .ipynb
     notebook = parse_py_to_notebook(args)
 
-    # Saving the notebook
     nbformat.write(notebook, f"output/{args.name}.ipynb")
 
 
