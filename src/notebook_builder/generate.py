@@ -17,13 +17,10 @@ def generate_py(args, template):
             {
                 "role": "system",
                 "content": f"""Please act as a {args.general_topic} expert and teacher! I want to create course material on {args.topic}.
-                                            The ouput should be specified in a Python notebook for which I provide you a template notebook as reference.
-                                            The template notebook shows how this course should be built up. Also it contains instructions for each specific section.
-                                            The notebook also contains meta commands, introduced with $ at the beginning of a line. Follow these instructions to create the notebook.
-                                            I also provide you a description of the cells that you can use.
-                                            The ouput format should be equal to the given input noteook. Remember to keep each cell small and concise. Make multiple to split up the content if helpful. Dont 
-                                            Take a deep breath and go through it step by step!
-                                            Template notebook: \n"""
+                                            The ouput should be specified in a Python notebook for which I provide you a template with the cell types you can use as a reference.
+                                            The template file shows the general format of this course material. Each line starting with $ is an instruction for you for a specific section. Follow these instructions to create the notebook. 
+                                            Take a deep breath and go through each instruction in the template step by step!
+                                            Template file: \n"""
                 + template
                 + """ Cell templates: \n"""
                 + cells
