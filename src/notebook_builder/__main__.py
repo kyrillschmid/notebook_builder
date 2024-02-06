@@ -1,9 +1,13 @@
 import argparse
 import nbformat
 
-from notebook_builder.generate import generate_py
-from notebook_builder.create_notebook import parse_py_to_notebook
-import streamlit as st
+from notebook_builder.generate_with_html import (
+    generate_from_data_science_handbook,
+    generate_from_green_tea_press,
+    generate_from_raw_code,
+)
+
+from notebook_builder.translate import get_translation
 
 
 def main():
@@ -15,43 +19,49 @@ def main():
     parser.add_argument(
         "-general_topic",
         "--general_topic",
-        default="Reinforcement Learning",
+        default="Python Data Sciece and Machine Learning",
         help="What is the overall topic of the course?",
     )
     parser.add_argument(
         "-topic",
         "--topic",
-        default="Markov Decision Processes",
+        default="Numpy Array Basics",
         help="What is the specific topic of the course?",
     )
     parser.add_argument(
         "-author",
         "--author",
-        default="Anonymous",
+        default="Dr. Kyrill Schmid",
         help="What is your name?",
-    )
-    parser.add_argument(
-        "-template",
-        "--template",
-        default="template_mdp.txt",
-        help="What is the name of the template?",
     )
     parser.add_argument(
         "-name",
         "--name",
-        default="markov_decision_processes",
+        default="Data Types in Python",
         help="What is the name of the output notebook?",
+    )
+
+    parser.add_argument(
+        "-url",
+        "--url",
+        default="--",
+        help="What is the url of the html file?",
     )
     args = parser.parse_args()
 
-    with open(args.template, "r") as f:
-        template = f.read()
+    print("Generating notebook...")
 
-    generate_py(args, template)
+    # generate_from_data_science_handbook(args)
+    # generate_from_green_tea_press(args)
+    # generate_from_raw_code(args)
 
-    notebook = parse_py_to_notebook(args)
+    # print(first_line + "\n" + section)
 
-    nbformat.write(notebook, f"output/{args.name}.ipynb")
+    get_translation(args)
+
+    # notebook = parse_py_to_notebook(args)
+
+    # nbformat.write(notebook, f"output/{args.name}.ipynb")
 
 
 if __name__ == "__main__":

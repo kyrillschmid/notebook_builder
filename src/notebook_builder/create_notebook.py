@@ -33,18 +33,13 @@ def parse_py_to_notebook(args):
 
     for line in lines:
         # Replace the header section with the image and additional content
-        if line.strip().startswith('""" Header cell """') and not header_replaced:
+        if not header_replaced:
             if current_cell:
                 add_cell_to_notebook(current_cell, cell_type, notebook)
             # Add the header as a markdown cell
             notebook.cells.append(new_markdown_cell(header_html))
             current_cell = []
             header_replaced = True
-            continue
-
-        # Ignore lines starting with """
-        if line.strip().startswith('"""'):
-            continue
 
         # Check for start of a markdown cell
         elif line.startswith("# %% [markdown]"):
